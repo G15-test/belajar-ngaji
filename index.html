@@ -3,81 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurnal Ngaji Calon Imam</title>
+    <title>Pusat Ngaji Calon Imam</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
-        body { background-color: #f0fdf4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .card { background: white; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
+        body { background-color: #f0fdf4; font-family: 'Segoe UI', sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .arabic-text { font-family: 'Amiri', serif; font-size: 2.2rem; line-height: 4.5rem; text-align: right; }
+        .quran-container { max-height: 600px; overflow-y: auto; }
     </style>
 </head>
 <body class="p-4 md:p-8">
-    <div class="max-w-2xl mx-auto">
-        <!-- Header Section -->
-        <div class="text-center mb-10">
-            <h1 class="text-3xl font-bold text-green-800 mb-2">Target Menjadi Imam Sholeh</h1>
-            <p class="text-green-600 italic">"Sebaik-baik kalian adalah yang belajar Al-Qur'an dan mengajarkannya."</p>
-            <div class="mt-4 bg-green-100 p-3 rounded-full text-sm font-semibold text-green-700">
-                ⭐ Amalan Harian: Istighfar 100x & Shalat Tepat Waktu
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-green-800">Jurnal Ngaji & Ibadah</h1>
+            <p class="text-green-600 mt-2 italic">Target: Menjadi Imam yang Istiqamah</p>
+            <div class="mt-3 inline-block bg-white px-6 py-2 rounded-full text-sm font-bold text-orange-600 shadow-sm border border-orange-100">
+                📿 Istighfar 100x & Shalat Tepat Waktu
             </div>
         </div>
 
-        <!-- Progress Tracker -->
-        <div class="card p-6 mb-8 border-l-8 border-green-500">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Materi Pembelajaran</h2>
+        <!-- Tab Menu -->
+        <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <button onclick="showTab('progres')" class="bg-green-700 text-white px-5 py-2 rounded-full shadow-md hover:bg-green-800 transition">📊 Progres</button>
+            <button onclick="showTab('iqro')" class="bg-green-600 text-white px-5 py-2 rounded-full shadow-md hover:bg-green-700 transition">📖 Belajar Iqro</button>
+            <button onclick="showTab('quran')" class="bg-green-600 text-white px-5 py-2 rounded-full shadow-md hover:bg-green-700 transition">🕌 Al-Qur'an Digital</button>
+        </div>
+
+        <!-- 1. TAB PROGRES -->
+        <div id="progres" class="tab-content active bg-white p-6 rounded-2xl shadow-lg border-b-8 border-green-500">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Capaian Calon Imam</h2>
+            <div class="grid gap-3">
+                <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition">
+                    <input type="checkbox" class="w-6 h-6 rounded-full text-green-600 mr-4">
+                    <span class="font-medium text-gray-700">Iqro 1 - 3 (Mengenal Huruf & Harakat)</span>
+                </label>
+                <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition">
+                    <input type="checkbox" class="w-6 h-6 rounded-full text-green-600 mr-4">
+                    <span class="font-medium text-gray-700">Iqro 4 - 6 (Tajwid & Dengung)</span>
+                </label>
+                <label class="flex items-center p-4 bg-green-50 rounded-xl cursor-pointer hover:bg-green-100 transition">
+                    <input type="checkbox" class="w-6 h-6 rounded-full text-green-600 mr-4">
+                    <span class="font-medium text-gray-700">Hafalan Surat Pendek (Juz Amma)</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 2. TAB IQRO -->
+        <div id="iqro" class="tab-content bg-white p-4 rounded-2xl shadow-lg border-b-8 border-blue-500">
+            <h2 class="text-xl font-bold mb-4 text-blue-800">Buku Iqro Lengkap</h2>
+            <iframe src="https://archive.org" class="w-full h-[500px] border-none rounded-xl"></iframe>
+        </div>
+
+        <!-- 3. TAB QURAN (Full Feature) -->
+        <div id="quran" class="tab-content bg-white p-6 rounded-2xl shadow-lg border-b-8 border-emerald-600">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-emerald-800">Al-Qur'anul Karim</h2>
+                <select id="surahSelect" onchange="fetchSurah(this.value)" class="p-2 border rounded-lg bg-emerald-50 font-medium">
+                    <option value="1">Pilih Surah (Default: Al-Fatihah)</option>
+                </select>
+            </div>
             
-            <div class="space-y-4">
-                <!-- Iqro 1-3 -->
-                <div class="flex items-center justify-between p-3 border-b">
-                    <div>
-                        <h3 class="font-bold text-gray-700">Iqro 1 - 3 (Mengenal Huruf)</h3>
-                        <p class="text-xs text-gray-500">Target: Makhraj & Harakat Dasar</p>
-                    </div>
-                    <input type="checkbox" class="w-6 h-6 text-green-600">
-                </div>
-
-                <!-- Iqro 4-6 -->
-                <div class="flex items-center justify-between p-3 border-b">
-                    <div>
-                        <h3 class="font-bold text-gray-700">Iqro 4 - 6 (Tajwid Dasar)</h3>
-                        <p class="text-xs text-gray-500">Target: Mad, Tanwin, & Sukun</p>
-                    </div>
-                    <input type="checkbox" class="w-6 h-6 text-green-600">
-                </div>
-
-                <!-- Al-Qur'an Juz Amma -->
-                <div class="flex items-center justify-between p-3 border-b">
-                    <div>
-                        <h3 class="font-bold text-gray-700">Juz Amma (Latihan Imam)</h3>
-                        <p class="text-xs text-gray-500">Target: Hafalan Surat Pendek untuk Shalat</p>
-                    </div>
-                    <input type="checkbox" class="w-6 h-6 text-green-600">
-                </div>
-
-                <!-- Al-Qur'an 30 Juz -->
-                <div class="flex items-center justify-between p-3">
-                    <div>
-                        <h3 class="font-bold text-gray-700">Al-Qur'an Mushaf</h3>
-                        <p class="text-xs text-gray-500">Target: Kelancaran Membaca</p>
-                    </div>
-                    <input type="checkbox" class="w-6 h-6 text-green-600">
-                </div>
+            <div id="quranContent" class="quran-container space-y-8 p-2">
+                <div class="text-center py-10 text-gray-400">Memuat Ayat...</div>
             </div>
-        </div>
-
-        <!-- Resources Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a href="https://www.youtube.com" target="_blank" class="card p-4 text-center bg-blue-50 hover:bg-blue-100 text-blue-800 font-medium">
-                📺 Video Tutorial Iqro
-            </a>
-            <a href="https://quran.com" target="_blank" class="card p-4 text-center bg-yellow-50 hover:bg-yellow-100 text-yellow-800 font-medium">
-                📖 Baca Al-Qur'an Online
-            </a>
         </div>
 
         <footer class="mt-12 text-center text-gray-400 text-sm">
-            Semangat bertaubat dan memperbaiki diri demi keluarga.
+            Dibuat untuk mempermudah jalan bertaubat.<br>
+            "Bacalah Al-Qur'an, karena ia akan datang memberi syafaat bagi pembacanya."
         </footer>
     </div>
+
+    <script>
+        // Tab System
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Quran API Integration
+        async function loadSurahList() {
+            const res = await fetch('https://api.quran.guran.id');
+            const data = await res.json();
+            const select = document.getElementById('surahSelect');
+            data.chapters.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.text = `${s.id}. ${s.name_simple} (${s.translated_name.name})`;
+                select.appendChild(opt);
+            });
+        }
+
+        async function fetchSurah(id) {
+            const content = document.getElementById('quranContent');
+            content.innerHTML = '<div class="text-center py-10 italic">Mengambil ayat-ayat Allah...</div>';
+            
+            try {
+                const [resArab, resIndo] = await Promise.all([
+                    fetch(`https://api.quran.com{id}`),
+                    fetch(`https://api.quran.com{id}`)
+                ]);
+                
+                const dataArab = await resArab.json();
+                const dataIndo = await resIndo.json();
+
+                content.innerHTML = '';
+                dataArab.verses.forEach((verse, index) => {
+                    const audioId = String(id).padStart(3, '0') + String(index + 1).padStart(3, '0');
+                    const verseHtml = `
+                        <div class="pb-6 border-b border-gray-100">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">${id}:${index+1}</span>
+                                <audio controls class="h-8 opacity-60 hover:opacity-100 transition">
+                                    <source src="https://audio.qurancdn.com" type="audio/mpeg">
+                                    <source src="https://verses.quran.com{audioId}.mp3" type="audio/mpeg">
+                                </audio>
+                            </div>
+                            <p class="arabic-text mb-4 leading-loose">${verse.text_uthmani}</p>
+                            <p class="text-gray-600 text-sm italic leading-relaxed">${dataIndo.translations[index].text}</p>
+                        </div>
+                    `;
+                    content.innerHTML += verseHtml;
+                });
+            } catch (e) {
+                content.innerHTML = '<p class="text-red-500 text-center">Gagal memuat Al-Qur\'an. Pastikan koneksi internet aktif.</p>';
+            }
+        }
+
+        // Initialize
+        loadSurahList();
+        fetchSurah(1); // Default Al-Fatihah
+    </script>
 </body>
 </html>
